@@ -13,7 +13,7 @@ category: "Runtime"
 ---
 
 **Script:** `[features/shortcode/assets/js/filters.js](features/shortcode/assets/js/filters.js)`  
-**Localized object:** `scrySearchFilters` (filterable via `[scry_ms_fa_filters_localized](/scry-search-filters/filters/scry_ms_fa_filters_localized/)`)
+**Localized object:** `scrySearchFilters` (filterable via `[scry_ms_fa_filters_localized]({{ '/scry-search-filters/filters/scry_ms_fa_filters_localized/' | relative_url }})`)
 
 The base Scry Search plugin exposes a global runtime, typically:
 
@@ -43,7 +43,7 @@ Each shortcode form may set `data-scry-fi-selector`. The widget’s `ScrySearchF
 - If the attribute is empty → attaches to **every** entry in `window.scrySearch.searchForms`
 - Otherwise → attaches only when `searchForm.formElement.matches(selector)`
 
-The selector is tested against the **`<form>` element** (`formElement`), not a parent wrapper or child control. Use a selector that matches that tag (e.g. `form.my-search`, `#search-form`, `form:has(.wp-block-search__input)`). See [Connecting to a specific search form](/scry-search-filters/shortcodes/scry-search-facets/).
+The selector is tested against the **`<form>` element** (`formElement`), not a parent wrapper or child control. Use a selector that matches that tag (e.g. `form.my-search`, `#search-form`, `form:has(.wp-block-search__input)`). See [Connecting to a specific search form]({{ '/scry-search-filters/shortcodes/scry-search-facets/' | relative_url }}).
 
 ### Pre-submit injection
 

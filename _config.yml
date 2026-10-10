@@ -1,8 +1,8 @@
 # Scry Search documentation site (Jekyll)
 title: Scry Search Docs
 description: Developer reference for Scry Search and premium upgrades — hooks, shortcodes, and the window.scrySearch runtime.
-url: "https://docs.scrywp.com"
-baseurl: ""
+url: "https://jtgraham38.github.io"
+baseurl: "/ScryWP-Search-Docs"
 
 # Branding aligned with https://scrywp.com/
 brand:

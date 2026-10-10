@@ -27,7 +27,7 @@ Default keys include:
 - `classSelector` — optional CSS class (token only) that limits which discovered forms get autosuggest; empty string means all discovered forms
 - `restApiUrl` — REST URL for the autosuggest endpoint (`scry-search/v1/autosuggest`)
 
-This is separate from [`scry_ms_window_localized`](/scry-search/filters/scry_ms_window_localized/) / `windowLocalized`. Use the window filter for form discovery (`searchFormSelectors`); use this filter for autosuggest-only config. Do not put admin API keys here — anything returned is exposed to the browser.
+This is separate from [`scry_ms_window_localized`]({{ '/scry-search/filters/scry_ms_window_localized/' | relative_url }}) / `windowLocalized`. Use the window filter for form discovery (`searchFormSelectors`); use this filter for autosuggest-only config. Do not put admin API keys here — anything returned is exposed to the browser.
 
 ```php
 add_filter( 'scry_ms_autosuggest_localized', function ( $data ) {

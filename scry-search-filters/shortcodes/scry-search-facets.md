@@ -21,7 +21,7 @@ Renders a facet form that syncs into one or more Scry Search forms on submit. Pl
 
 A shortcode generator lives in the base plugin’s **Facets** premium-upgrade settings modal (`scry_ms_premium_upgrade_settings_ui`, slug `scry-search-facets`). Use the **Appearance** and **Groups** tabs, then copy the shortcode.
 
-Catalog data (indexed post types + taxonomies/terms) respects `[scry_ms_fa_excluded_taxonomies](/scry-search-filters/filters/scry_ms_fa_excluded_taxonomies/)`.
+Catalog data (indexed post types + taxonomies/terms) respects `[scry_ms_fa_excluded_taxonomies]({{ '/scry-search-filters/filters/scry_ms_fa_excluded_taxonomies/' | relative_url }})`.
 
 ### Attributes
 
@@ -29,7 +29,7 @@ Catalog data (indexed post types + taxonomies/terms) respects `[scry_ms_fa_exclu
 | Attribute       | Default      | Description                                                                                                                                                           |
 | --------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `groups`        | *(required)* | JSON object of facet groups (see below). Empty / invalid JSON → shortcode outputs nothing.                                                                            |
-| `selector`      | `''`         | CSS selector that must match the search form’s **`<form>` tag** (see [Connecting to a specific search form](/scry-search-filters/shortcodes/scry-search-facets/)). Empty → all forms on `window.scrySearch.searchForms`. Stored as `data-scry-fi-selector`. |
+| `selector`      | `''`         | CSS selector that must match the search form’s **`<form>` tag** (see [Connecting to a specific search form]({{ '/scry-search-filters/shortcodes/scry-search-facets/' | relative_url }})). Empty → all forms on `window.scrySearch.searchForms`. Stored as `data-scry-fi-selector`. |
 | `layout`        | `column`     | `column`, `row`, or `grid`                                                                                                                                            |
 | `bg_color`      | `#ffffff`    | Group background (hex)                                                                                                                                                |
 | `text_color`    | `#111111`    | Text color (hex)                                                                                                                                                      |
@@ -147,7 +147,7 @@ If nothing matches, the facets widget still renders but never injects fields int
 
 1. Front-end script depends on the base plugin handle `scry_ms_window-script`.
 2. On `scrySearchReady`, it registers the `filters` upgrade and wraps each matching widget in `ScrySearchFilters_FilterForm`.
-3. Each widget’s `selector` (if set) filters which registered search forms it attaches to — see [Connecting to a specific search form](/scry-search-filters/shortcodes/scry-search-facets/).
-4. On form pre-submit, filter field values are copied into the search form as hidden inputs (see [Frontend upgrade](/scry-search-filters/javascript/window-scrysearch-upgrade/)).
+3. Each widget’s `selector` (if set) filters which registered search forms it attaches to — see [Connecting to a specific search form]({{ '/scry-search-filters/shortcodes/scry-search-facets/' | relative_url }}).
+4. On form pre-submit, filter field values are copied into the search form as hidden inputs (see [Frontend upgrade]({{ '/scry-search-filters/javascript/window-scrysearch-upgrade/' | relative_url }})).
 
 ---

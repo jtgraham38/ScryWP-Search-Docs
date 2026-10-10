@@ -15,7 +15,7 @@ show_filter_search: false
 
 | Name | Summary |
 | ---- | ------- |
-| [Hook naming](/scry-search/guides/hook-naming/) | Every PHP hook is namespaced with the scry_ms_ prefix. |
-| [Plugin lifecycle](/scry-search/guides/plugin-lifecycle/) | What happens on deactivation and uninstall. |
-| [WordPress hook conventions](/scry-search/guides/wordpress-hook-conventions/) | Filters return values; actions are for side effects. |
+| [Hook naming]({{ '/scry-search/guides/hook-naming/' | relative_url }}) | Every PHP hook is namespaced with the scry_ms_ prefix. |
+| [Plugin lifecycle]({{ '/scry-search/guides/plugin-lifecycle/' | relative_url }}) | What happens on deactivation and uninstall. |
+| [WordPress hook conventions]({{ '/scry-search/guides/wordpress-hook-conventions/' | relative_url }}) | Filters return values; actions are for side effects. |
 

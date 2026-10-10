@@ -15,5 +15,5 @@ show_filter_search: false
 
 | Name | Summary |
 | ---- | ------- |
-| [`[scry-search-facets]`](/scry-search-filters/shortcodes/scry-search-facets/) | Renders a facet form that syncs into Scry Search forms on submit. |
+| [`[scry-search-facets]`]({{ '/scry-search-filters/shortcodes/scry-search-facets/' | relative_url }}) | Renders a facet form that syncs into Scry Search forms on submit. |
 

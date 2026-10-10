@@ -15,9 +15,9 @@ show_sidebar: true
     <a href="https://scrywp.com/">scrywp.com</a>.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="/scry-search/">Scry Search reference</a>
-    <a class="btn btn-ghost" href="/scry-search-filters/">Filters upgrade</a>
-    <a class="btn btn-ghost" href="/reference/">Browse everything</a>
+    <a class="btn btn-primary" href="{{ '/scry-search/' | relative_url }}">Scry Search reference</a>
+    <a class="btn btn-ghost" href="{{ '/scry-search-filters/' | relative_url }}">Filters upgrade</a>
+    <a class="btn btn-ghost" href="{{ '/reference/' | relative_url }}">Browse everything</a>
   </div>
 </section>
 
@@ -31,7 +31,7 @@ show_sidebar: true
       <span class="badge type-action">7 actions</span>
       <span class="badge type-javascript">8 JS pages</span>
     </div>
-    <a class="btn btn-primary" href="/scry-search/">Open docs</a>
+    <a class="btn btn-primary" href="{{ '/scry-search/' | relative_url }}">Open docs</a>
   </article>
 
   <article class="plugin-card">
@@ -43,7 +43,7 @@ show_sidebar: true
       <span class="badge type-shortcode">1 shortcodes</span>
       <span class="badge type-javascript">1 JS pages</span>
     </div>
-    <a class="btn btn-primary" href="/scry-search-filters/">Open docs</a>
+    <a class="btn btn-primary" href="{{ '/scry-search-filters/' | relative_url }}">Open docs</a>
   </article>
 </div>
 

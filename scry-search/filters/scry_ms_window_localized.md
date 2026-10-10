@@ -29,7 +29,7 @@ Default keys include:
 - `searchFormSelectors` — **array of CSS selectors** used to discover `<form>` elements on the page
 - `debounceMs` — milliseconds `submitAjax()` waits after the last call before sending (default `250`). Read as `windowLocalized.debounceMs`.
 
-Use this filter to add discovery selectors for custom theme or builder search forms (see [Form discovery](/scry-search/javascript/form-discovery/) below), or to change the AJAX debounce.
+Use this filter to add discovery selectors for custom theme or builder search forms (see [Form discovery]({{ '/scry-search/javascript/form-discovery/' | relative_url }}) below), or to change the AJAX debounce.
 
 ```php
 add_filter( 'scry_ms_window_localized', function ( $data ) {

@@ -13,10 +13,10 @@ Public extension points for Scry Search: Meilisearch Filtered Search. All add-on
 
 ## Browse by type
 
-- **[Guides](/scry-search-filters/guides/)** — 3 pages
-- **[PHP filters](/scry-search-filters/filters/)** — 5 pages
-- **[Shortcodes](/scry-search-filters/shortcodes/)** — 1 page
-- **[JavaScript API](/scry-search-filters/javascript/)** — 1 page
+- **[Guides]({{ '/scry-search-filters/guides/' | relative_url }})** — 3 pages
+- **[PHP filters]({{ '/scry-search-filters/filters/' | relative_url }})** — 5 pages
+- **[Shortcodes]({{ '/scry-search-filters/shortcodes/' | relative_url }})** — 1 page
+- **[JavaScript API]({{ '/scry-search-filters/javascript/' | relative_url }})** — 1 page
 
 ## Filter categories
 
@@ -29,7 +29,7 @@ Public extension points for Scry Search: Meilisearch Filtered Search. All add-on
 
 | Type | Index |
 | ---- | ----- |
-| Guides | [View all](/scry-search-filters/guides/) |
-| PHP filters | [View all](/scry-search-filters/filters/) |
-| Shortcodes | [View all](/scry-search-filters/shortcodes/) |
-| JavaScript API | [View all](/scry-search-filters/javascript/) |
+| Guides | [View all]({{ '/scry-search-filters/guides/' | relative_url }}) |
+| PHP filters | [View all]({{ '/scry-search-filters/filters/' | relative_url }}) |
+| Shortcodes | [View all]({{ '/scry-search-filters/shortcodes/' | relative_url }}) |
+| JavaScript API | [View all]({{ '/scry-search-filters/javascript/' | relative_url }}) |

@@ -15,12 +15,12 @@ show_filter_search: false
 
 | Name | Summary |
 | ---- | ------- |
-| [Form discovery](/scry-search/javascript/form-discovery/) | How the runtime finds <form> elements and wraps them as ScrySearch_SearchForm instances. |
-| [JavaScript runtime overview](/scry-search/javascript/overview/) | The plugin ships a small front‑end runtime, window.scrySearch, that discovers search forms on the page and gives you ordered hooks to run code before/after a search — both for normal submits and AJAX submits (used by aut… |
-| [ScrySearch_SearchForm](/scry-search/javascript/scrysearch-searchform/) | Per-form wrapper with submit/submitAjax and ordered pre/post action hooks. |
-| [scrySearchReady](/scry-search/javascript/scrysearchready/) | Event dispatched on document after forms are discovered — wait for this before using the API. |
-| [Submit action pipeline](/scry-search/javascript/submit-action-pipeline/) | Ordered pre/post actions for normal and AJAX submits. |
-| [Upgrades](/scry-search/javascript/upgrades/) | Reserve a namespace on window.scrySearch.upgrades for premium add-ons. |
-| [window.scrySearch](/scry-search/javascript/window-scrysearch/) | Global runtime object: version, form getters, and registerUpgrade(). |
-| [windowLocalized](/scry-search/javascript/windowlocalized/) | PHP-localized config object read by the front-end runtime. |
+| [Form discovery]({{ '/scry-search/javascript/form-discovery/' | relative_url }}) | How the runtime finds <form> elements and wraps them as ScrySearch_SearchForm instances. |
+| [JavaScript runtime overview]({{ '/scry-search/javascript/overview/' | relative_url }}) | The plugin ships a small front‑end runtime, window.scrySearch, that discovers search forms on the page and gives you ordered hooks to run code before/after a search — both for normal submits and AJAX submits (used by aut… |
+| [ScrySearch_SearchForm]({{ '/scry-search/javascript/scrysearch-searchform/' | relative_url }}) | Per-form wrapper with submit/submitAjax and ordered pre/post action hooks. |
+| [scrySearchReady]({{ '/scry-search/javascript/scrysearchready/' | relative_url }}) | Event dispatched on document after forms are discovered — wait for this before using the API. |
+| [Submit action pipeline]({{ '/scry-search/javascript/submit-action-pipeline/' | relative_url }}) | Ordered pre/post actions for normal and AJAX submits. |
+| [Upgrades]({{ '/scry-search/javascript/upgrades/' | relative_url }}) | Reserve a namespace on window.scrySearch.upgrades for premium add-ons. |
+| [window.scrySearch]({{ '/scry-search/javascript/window-scrysearch/' | relative_url }}) | Global runtime object: version, form getters, and registerUpgrade(). |
+| [windowLocalized]({{ '/scry-search/javascript/windowlocalized/' | relative_url }}) | PHP-localized config object read by the front-end runtime. |
 

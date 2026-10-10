@@ -15,5 +15,5 @@ show_filter_search: false
 
 | Name | Summary |
 | ---- | ------- |
-| [window.scrySearch filters upgrade](/scry-search-filters/javascript/window-scrysearch-upgrade/) | Script: features/shortcode/assets/js/filters.js Localized object: scrySearchFilters (filterable via scry_ms_fa_filters_localized) |
+| [window.scrySearch filters upgrade]({{ '/scry-search-filters/javascript/window-scrysearch-upgrade/' | relative_url }}) | Script: features/shortcode/assets/js/filters.js Localized object: scrySearchFilters (filterable via scry_ms_fa_filters_localized) |
 

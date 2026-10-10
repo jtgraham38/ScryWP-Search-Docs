@@ -13,10 +13,10 @@ Public extension reference for Scry Search for Meilisearch — PHP filters, acti
 
 ## Browse by type
 
-- **[Guides](/scry-search/guides/)** — 3 pages
-- **[PHP filters](/scry-search/filters/)** — 43 pages
-- **[PHP actions](/scry-search/actions/)** — 7 pages
-- **[JavaScript API](/scry-search/javascript/)** — 8 pages
+- **[Guides]({{ '/scry-search/guides/' | relative_url }})** — 3 pages
+- **[PHP filters]({{ '/scry-search/filters/' | relative_url }})** — 43 pages
+- **[PHP actions]({{ '/scry-search/actions/' | relative_url }})** — 7 pages
+- **[JavaScript API]({{ '/scry-search/javascript/' | relative_url }})** — 8 pages
 
 ## Filter categories
 
@@ -33,7 +33,7 @@ Public extension reference for Scry Search for Meilisearch — PHP filters, acti
 
 | Type | Index |
 | ---- | ----- |
-| Guides | [View all](/scry-search/guides/) |
-| PHP filters | [View all](/scry-search/filters/) |
-| PHP actions | [View all](/scry-search/actions/) |
-| JavaScript API | [View all](/scry-search/javascript/) |
+| Guides | [View all]({{ '/scry-search/guides/' | relative_url }}) |
+| PHP filters | [View all]({{ '/scry-search/filters/' | relative_url }}) |
+| PHP actions | [View all]({{ '/scry-search/actions/' | relative_url }}) |
+| JavaScript API | [View all]({{ '/scry-search/javascript/' | relative_url }}) |

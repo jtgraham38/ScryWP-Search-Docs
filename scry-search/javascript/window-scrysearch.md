@@ -16,7 +16,7 @@ category: "Runtime"
 | `version`                          | `string`                              | Runtime version.                                                  |
 | `getSearchForms()`                 | `() => ScrySearch_SearchForm[]`       | All detected search forms.                                        |
 | `getSearchFormsByClass(className)` | `(string) => ScrySearch_SearchForm[]` | Search forms whose `<form>` has the given CSS class.              |
-| `registerUpgrade(name, version)`   | `(string, string) => void`            | Register a named extension namespace (see [Upgrades](/scry-search/javascript/upgrades/)). |
+| `registerUpgrade(name, version)`   | `(string, string) => void`            | Register a named extension namespace (see [Upgrades]({{ '/scry-search/javascript/upgrades/' | relative_url }})). |
 
 
-A “search form” is any `<form>` matched by `windowLocalized.searchFormSelectors` (see [Form discovery](/scry-search/javascript/form-discovery/)).
+A “search form” is any `<form>` matched by `windowLocalized.searchFormSelectors` (see [Form discovery]({{ '/scry-search/javascript/form-discovery/' | relative_url }})).

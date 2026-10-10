@@ -22,4 +22,4 @@ Modify the query used to build autosuggest results.
 | **When**      | Before the autosuggest query runs.         |
 
 
-The array contains standard `WP_Query` arguments such as `s`, `post_type`, `posts_per_page`, and `no_found_rows`. Default `posts_per_page` comes from [`scry_ms_autosuggest_posts_per_page`](/scry-search/filters/scry_ms_autosuggest_posts_per_page/).
+The array contains standard `WP_Query` arguments such as `s`, `post_type`, `posts_per_page`, and `no_found_rows`. Default `posts_per_page` comes from [`scry_ms_autosuggest_posts_per_page`]({{ '/scry-search/filters/scry_ms_autosuggest_posts_per_page/' | relative_url }}).

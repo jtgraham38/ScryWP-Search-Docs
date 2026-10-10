@@ -68,6 +68,11 @@ def yaml_escape(value: str) -> str:
     return value.replace("\\", "\\\\").replace('"', '\\"').replace("\n", " ").strip()
 
 
+def liquid_url(path: str) -> str:
+    """Emit a Liquid path that respects site.baseurl on GitHub Pages."""
+    return "{{ '" + path + "' | relative_url }}"
+
+
 def first_paragraph(text: str) -> str:
     """Return the first non-empty prose paragraph as a short summary."""
     chunks = re.split(r"\n\s*\n", text.strip())
@@ -103,12 +108,12 @@ def rewrite_internal_links(body: str, pages_by_hook: dict[str, DocPage], plugin:
         # normalize common anchors
         key = key.replace("frontend-windowscrysearch-upgrade", "window-scrysearch-upgrade")
         if key in pages_by_hook:
-            return f"[{label}]({pages_by_hook[key].url_path})"
+            return f"[{label}]({liquid_url(pages_by_hook[key].url_path)})"
         # try slugify
         slug = slugify(key)
         for page in pages_by_hook.values():
             if page.slug == slug and page.plugin == plugin:
-                return f"[{label}]({page.url_path})"
+                return f"[{label}]({liquid_url(page.url_path)})"
         return match.group(0)
 
     return re.sub(r"\[([^\]]+)\]\((#[^)]+)\)", repl, body)
@@ -544,9 +549,9 @@ def write_list_page(
         rows = []
         for item in items:
             rows.append(
-                f"| [`{item.title}`]({item.url_path}) | {item.summary} |"
+                f"| [`{item.title}`]({liquid_url(item.url_path)}) | {item.summary} |"
                 if item.heading_is_code and item.doc_type in {"filter", "action", "shortcode"}
-                else f"| [{item.title}]({item.url_path}) | {item.summary} |"
+                else f"| [{item.title}]({liquid_url(item.url_path)}) | {item.summary} |"
             )
         sections.append(
             f"### {category}\n\n| Name | Summary |\n| ---- | ------- |\n" + "\n".join(rows) + "\n"
@@ -561,7 +566,7 @@ def write_list_page(
         for item in sorted(pages, key=lambda x: x.title.lower()):
             name = f"<code>{item.title}</code>" if item.heading_is_code else item.title
             body_parts.append(
-                f'<tr><td><a href="{item.url_path}">{name}</a></td>'
+                f'<tr><td><a href="{liquid_url(item.url_path)}">{name}</a></td>'
                 f"<td>{item.category}</td>"
                 f'<td class="muted">{item.summary}</td></tr>'
             )
@@ -627,7 +632,7 @@ def write_plugin_index(plugin: str, plugin_name: str, pages: list[DocPage], blur
         if counts.get(doc_type):
             n = counts[doc_type]
             cards.append(
-                f"- **[{list_labels[doc_type]}](/{plugin}/{TYPE_LIST_URL[doc_type]}/)** — {n} page{'s' if n != 1 else ''}"
+                f"- **[{list_labels[doc_type]}]({liquid_url(f'/{plugin}/{TYPE_LIST_URL[doc_type]}/')})** — {n} page{'s' if n != 1 else ''}"
             )
 
     # Category breakdown for filters
@@ -663,7 +668,7 @@ show_sidebar: true
 """
     for doc_type in order:
         if counts.get(doc_type):
-            content += f"| {list_labels[doc_type]} | [View all](/{plugin}/{TYPE_LIST_URL[doc_type]}/) |\n"
+            content += f"| {list_labels[doc_type]} | [View all]({liquid_url(f'/{plugin}/{TYPE_LIST_URL[doc_type]}/')}) |\n"
 
     out.write_text(content, encoding="utf-8")
 
@@ -690,9 +695,9 @@ show_sidebar: true
     <a href="https://scrywp.com/">scrywp.com</a>.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="/scry-search/">Scry Search reference</a>
-    <a class="btn btn-ghost" href="/scry-search-filters/">Filters upgrade</a>
-    <a class="btn btn-ghost" href="/reference/">Browse everything</a>
+    <a class="btn btn-primary" href="{liquid_url('/scry-search/')}">Scry Search reference</a>
+    <a class="btn btn-ghost" href="{liquid_url('/scry-search-filters/')}">Filters upgrade</a>
+    <a class="btn btn-ghost" href="{liquid_url('/reference/')}">Browse everything</a>
   </div>
 </section>
 
@@ -706,7 +711,7 @@ show_sidebar: true
       <span class="badge type-action">{sum(1 for p in scry if p.doc_type=='action')} actions</span>
       <span class="badge type-javascript">{sum(1 for p in scry if p.doc_type=='javascript')} JS pages</span>
     </div>
-    <a class="btn btn-primary" href="/scry-search/">Open docs</a>
+    <a class="btn btn-primary" href="{liquid_url('/scry-search/')}">Open docs</a>
   </article>
 
   <article class="plugin-card">
@@ -718,7 +723,7 @@ show_sidebar: true
       <span class="badge type-shortcode">{sum(1 for p in filters if p.doc_type=='shortcode')} shortcodes</span>
       <span class="badge type-javascript">{sum(1 for p in filters if p.doc_type=='javascript')} JS pages</span>
     </div>
-    <a class="btn btn-primary" href="/scry-search-filters/">Open docs</a>
+    <a class="btn btn-primary" href="{liquid_url('/scry-search-filters/')}">Open docs</a>
   </article>
 </div>
 
@@ -739,7 +744,7 @@ def write_reference(all_pages: list[DocPage]) -> None:
     for p in sorted(all_pages, key=lambda x: x.title.lower()):
         name = f"<code>{p.title}</code>" if p.heading_is_code and p.doc_type in {"filter", "action", "shortcode"} else p.title
         rows.append(
-            f'<tr><td><a href="{p.url_path}">{name}</a></td>'
+            f'<tr><td><a href="{liquid_url(p.url_path)}">{name}</a></td>'
             f"<td>{p.plugin_name}</td>"
             f"<td>{TYPE_LABELS[p.doc_type]}</td>"
             f"<td>{p.category}</td>"
