@@ -1,1 +1,46 @@
-_config.yml
+# Scry Search documentation site (Jekyll)
+title: Scry Search Docs
+description: Developer reference for Scry Search and premium upgrades — hooks, shortcodes, and the window.scrySearch runtime.
+url: "https://docs.scrywp.com"
+baseurl: ""
+
+# Branding aligned with https://scrywp.com/
+brand:
+  name: ScryWP Search
+  site_url: "https://scrywp.com"
+  logo: "https://scrywp.com/images/coai_light.png"
+  plugin_url: "https://wordpress.org/plugins/scry-search/"
+  github_docs: "https://github.com/jtgraham38/ScryWP-Search/blob/main/DOCS.md"
+
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+plugins: []
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: "scry-search"
+    values:
+      plugin: scry-search
+      plugin_name: Scry Search
+  - scope:
+      path: "scry-search-filters"
+    values:
+      plugin: scry-search-filters
+      plugin_name: Scry Search Filters
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - scripts
+  - README.md
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+  - _source

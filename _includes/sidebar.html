@@ -1,0 +1,54 @@
+<aside class="sidebar" aria-label="Documentation sections">
+  <div class="sidebar-group">
+    <h3>Plugins</h3>
+    <ul>
+      <li><a href="{{ '/scry-search/' | relative_url }}" {% if page.plugin == 'scry-search' and page.list_kind == 'plugin' %}class="is-active"{% endif %}>Scry Search</a></li>
+      <li><a href="{{ '/scry-search-filters/' | relative_url }}" {% if page.plugin == 'scry-search-filters' and page.list_kind == 'plugin' %}class="is-active"{% endif %}>Scry Search Filters</a></li>
+      <li><a href="{{ '/reference/' | relative_url }}" {% if page.url == '/reference/' %}class="is-active"{% endif %}>Full reference</a></li>
+    </ul>
+  </div>
+
+  {% if page.plugin == 'scry-search' or page.plugin == nil %}
+  <div class="sidebar-group">
+    <h3>Scry Search</h3>
+    <ul>
+      <li><a href="{{ '/scry-search/guides/' | relative_url }}">Guides</a></li>
+      <li><a href="{{ '/scry-search/filters/' | relative_url }}">PHP filters</a></li>
+      <li><a href="{{ '/scry-search/actions/' | relative_url }}">PHP actions</a></li>
+      <li><a href="{{ '/scry-search/javascript/' | relative_url }}">JavaScript API</a></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if page.plugin == 'scry-search-filters' or page.plugin == nil %}
+  <div class="sidebar-group">
+    <h3>Filters upgrade</h3>
+    <ul>
+      <li><a href="{{ '/scry-search-filters/guides/' | relative_url }}">Guides</a></li>
+      <li><a href="{{ '/scry-search-filters/shortcodes/' | relative_url }}">Shortcodes</a></li>
+      <li><a href="{{ '/scry-search-filters/filters/' | relative_url }}">PHP filters</a></li>
+      <li><a href="{{ '/scry-search-filters/javascript/' | relative_url }}">JavaScript API</a></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if page.doc_type and page.doc_type != "filter" and page.doc_type != "action" %}
+  {% assign related = site.pages | where: "plugin", page.plugin | where: "doc_type", page.doc_type | sort: "title" %}
+  {% if related.size > 0 %}
+  <div class="sidebar-group">
+    <h3>In this section</h3>
+    <ul>
+      {% for item in related %}
+        {% unless item.list_kind %}
+        <li>
+          <a href="{{ item.url | relative_url }}" {% if item.url == page.url %}class="is-active"{% endif %}>
+            {{ item.title }}
+          </a>
+        </li>
+        {% endunless %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  {% endif %}
+</aside>

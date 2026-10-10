@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<article class="doc">
+  <header class="doc-header">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="{{ '/' | relative_url }}">Docs</a>
+      ·
+      <a href="{{ page.plugin_url | default: '/' | relative_url }}">{{ page.plugin_name }}</a>
+      {% if page.doc_type %}
+      ·
+      <a href="{{ page.type_url | relative_url }}">{{ page.doc_type_label }}</a>
+      {% endif %}
+    </nav>
+    <h1>{% if page.heading %}{{ page.heading }}{% else %}<code>{{ page.title }}</code>{% endif %}</h1>
+    {% if page.summary %}
+    <p class="summary">{{ page.summary }}</p>
+    {% endif %}
+    <div class="doc-meta">
+      {% if page.plugin_name %}<span class="badge">{{ page.plugin_name }}</span>{% endif %}
+      {% if page.doc_type %}<span class="badge type-{{ page.doc_type }}">{{ page.doc_type_label }}</span>{% endif %}
+      {% if page.category %}<span class="badge type-guide">{{ page.category }}</span>{% endif %}
+    </div>
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+</article>

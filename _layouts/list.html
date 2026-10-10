@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+<header class="doc-header">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="{{ '/' | relative_url }}">Docs</a>
+    {% if page.plugin_name %}
+    ·
+    <a href="{{ page.plugin_url | relative_url }}">{{ page.plugin_name }}</a>
+    {% endif %}
+  </nav>
+  <h1>{{ page.title }}</h1>
+  {% if page.summary %}
+  <p class="summary">{{ page.summary }}</p>
+  {% endif %}
+  <div class="doc-meta">
+    {% if page.plugin_name %}<span class="badge">{{ page.plugin_name }}</span>{% endif %}
+    {% if page.doc_type %}<span class="badge type-{{ page.doc_type }}">{{ page.doc_type_label }}</span>{% endif %}
+  </div>
+</header>
+
+{% if page.show_filter_search %}
+<p>
+  <label for="doc-filter" class="visually-hidden" style="position:absolute;left:-9999px;">Filter list</label>
+  <input id="doc-filter" class="search-box" type="search" placeholder="Filter this list…" data-filter-table>
+</p>
+{% endif %}
+
+<div class="prose">
+  {{ content }}
+</div>

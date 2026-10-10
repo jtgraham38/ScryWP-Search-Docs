@@ -1,0 +1,16 @@
+<header class="site-header">
+  <nav class="site-nav" aria-label="Primary">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <img src="{{ site.brand.logo }}" alt="{{ site.brand.name }}">
+      <span>Scry Search Docs</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="{{ '/scry-search/' | relative_url }}" {% if page.plugin == 'scry-search' %}class="is-active"{% endif %}>Scry Search</a>
+      <a href="{{ '/scry-search-filters/' | relative_url }}" {% if page.plugin == 'scry-search-filters' %}class="is-active"{% endif %}>Filters</a>
+      <a href="{{ '/reference/' | relative_url }}">All reference</a>
+      <a href="{{ site.brand.site_url }}/wordpress-meilisearch-setup">Setup guide</a>
+      <a class="btn btn-primary" href="{{ site.brand.site_url }}">scrywp.com</a>
+    </div>
+  </nav>
+</header>
