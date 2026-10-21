@@ -292,7 +292,7 @@ pre code {
 
 @media (min-width: 720px) {
   .plugin-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   }
 }
 
@@ -340,6 +340,7 @@ pre code {
 .badge.type-shortcode { background: #fdf2f8; color: #9d174d; }
 .badge.type-guide { background: var(--surface-100); color: var(--surface-700); }
 .badge.type-feature { background: #ecfeff; color: #155e75; }
+.badge.type-rest { background: #e0f2fe; color: #075985; }
 
 .doc-header {
   margin-bottom: 1.5rem;

@@ -49,7 +49,7 @@ The selector is tested against the **`<form>` element** (`formElement`), not a p
 
 For each linked search form the widget:
 
-1. Ensures `searchForm.data.filtersUpgrade = { hiddeninputs: [] }`
+1. Ensures `searchForm.data.filters = { hiddeninputs: [] }`
 2. Registers `searchForm.addPreSubmitAction(…)` which:
   - Removes previously injected hidden inputs
   - Reads `FormData` from the filters widget (keeps duplicate names — do not use `Object.fromEntries`)

@@ -19,7 +19,7 @@ class DocPage:
 
     plugin: str
     plugin_name: str
-    doc_type: str  # filter | action | javascript | shortcode | guide | feature
+    doc_type: str  # filter | action | javascript | shortcode | guide | feature | rest
     slug: str
     title: str
     summary: str
@@ -36,6 +36,7 @@ class DocPage:
             "shortcode": "shortcodes",
             "guide": "guides",
             "feature": "features",
+            "rest": "rest",
         }
         return Path(self.plugin) / type_dirs[self.doc_type]
 
@@ -51,6 +52,7 @@ TYPE_LABELS = {
     "shortcode": "Shortcode",
     "guide": "Guide",
     "feature": "Feature",
+    "rest": "REST API",
 }
 
 TYPE_LIST_URL = {
@@ -60,6 +62,7 @@ TYPE_LIST_URL = {
     "shortcode": "shortcodes",
     "guide": "guides",
     "feature": "features",
+    "rest": "rest",
 }
 
 
@@ -437,15 +440,43 @@ def parse_scry_search_filters(md: str) -> list[DocPage]:
         )
 
     # Hook sections: ## Search / ## Shortcode script / ## Excluded / ## Analytics
-    # Each has ### `hook`
+    search_block = extract_between(md, "## Search", "## Shortcode script localization")
+    for heading, body in split_sections(search_block, r"^### (.+?)\s*$"):
+        hook = re.match(r"`([^`]+)`", heading)
+        if hook:
+            pages.append(
+                DocPage(
+                    plugin,
+                    plugin_name,
+                    "filter",
+                    slugify(hook.group(1)),
+                    hook.group(1),
+                    first_paragraph(body),
+                    body,
+                    category="Search",
+                )
+            )
+        elif "built-in" in heading.lower():
+            pages.append(
+                DocPage(
+                    plugin,
+                    plugin_name,
+                    "guide",
+                    "built-in-filter-construction",
+                    "Built-in filter construction",
+                    first_paragraph(body),
+                    body,
+                    category="Search",
+                    heading_is_code=False,
+                )
+            )
+
     for section_title, category in [
-        ("## Search", "Search"),
         ("## Shortcode script localization", "Shortcode"),
         ("## Excluded taxonomies", "Catalog"),
         ("## Analytics", "Analytics"),
     ]:
         block = extract_between(md, section_title, None)
-        # stop at next ## that isn't a hook container — extract_between already stops at next ##
         for heading, body in split_sections(block, r"^### `([^`]+)`\s*$"):
             pages.append(
                 DocPage(
@@ -490,6 +521,195 @@ def parse_scry_search_filters(md: str) -> list[DocPage]:
                 notes,
                 category="Guides",
                 heading_is_code=False,
+            )
+        )
+
+    return pages
+
+
+def parse_scry_search_ajax(md: str) -> list[DocPage]:
+    """Parse Ajax upgrade DOCS.md into pages."""
+    pages: list[DocPage] = []
+    plugin = "scry-search-ajax"
+    plugin_name = "Scry Search Ajax"
+
+    # Intro / prefixes
+    intro = md.split("## REST API")[0]
+    intro = re.sub(r"^# .+\n+", "", intro).strip()
+    if intro:
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "guide",
+                "overview",
+                "Ajax upgrade overview",
+                "Premium add-on hooks use scry_ms_aj_; shared main-plugin hooks keep the scry_ms_ prefix.",
+                intro,
+                category="Basics",
+                heading_is_code=False,
+            )
+        )
+
+    # REST endpoint (one route)
+    rest = extract_between(md, "## REST API", "## Filters (this plugin)")
+    if rest:
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "rest",
+                "post-search",
+                "POST /wp-json/scry-search-ajax/v1/search",
+                "Federated Meilisearch search used by the [scry-search-ajax] shortcode.",
+                rest,
+                category="REST",
+                heading_is_code=True,
+            )
+        )
+
+    # This plugin's filters
+    filters_block = extract_between(md, "## Filters (this plugin)", "## Shared / main-plugin hooks used by this plugin")
+    for heading, body in split_sections(filters_block, r"^### `([^`]+)`\s*$"):
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "filter",
+                slugify(heading),
+                heading,
+                first_paragraph(body),
+                body,
+                category="Ajax search",
+            )
+        )
+
+    # Shared main-plugin hooks (guide + pages for hooks unique to this DOCS)
+    shared = extract_between(md, "## Shared / main-plugin hooks used by this plugin", "## Frontend:")
+    if not shared:
+        shared = extract_between(md, "## Shared / main-plugin hooks used by this plugin", "## Frontend")
+    if shared:
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "guide",
+                "shared-main-plugin-hooks",
+                "Shared main-plugin hooks",
+                first_paragraph(shared),
+                shared,
+                category="Integration",
+                heading_is_code=False,
+            )
+        )
+        consumed = extract_between(shared, "### Consumed (listen)", None)
+        for heading, body in split_sections(consumed, r"^#### `([^`]+)`"):
+            # Drop the leftover "*(filter)*" / "*(action)*" marker from the heading line
+            body = re.sub(r"^\s*\*\([^)]+\)\*\s*", "", body).strip()
+            if heading == "scry_ms_premium_upgrade_settings_ui":
+                doc_type = "action"
+            elif heading == "scry_ms_premium_upgrades_display":
+                doc_type = "filter"
+            else:
+                doc_type = "filter"
+            pages.append(
+                DocPage(
+                    plugin,
+                    plugin_name,
+                    doc_type,
+                    slugify(heading),
+                    heading,
+                    first_paragraph(body),
+                    body,
+                    category="Integration",
+                )
+            )
+
+    # Frontend runtime
+    frontend = extract_between(md, "## Frontend: `window.scrySearch` upgrade", None)
+    intro_end = re.search(r"\n### ", frontend) if frontend else None
+    frontend_intro = frontend[: intro_end.start()].strip() if intro_end else ""
+    if frontend_intro:
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "javascript",
+                "overview",
+                "Ajax JavaScript runtime",
+                first_paragraph(frontend_intro),
+                frontend_intro,
+                category="Runtime",
+                heading_is_code=False,
+            )
+        )
+
+    js_sections = {
+        "Base runtime (from main plugin)": (
+            "base-runtime",
+            "Base runtime",
+            "Runtime",
+            "Pieces of window.scrySearch that this add-on uses.",
+            False,
+        ),
+        "Registration": (
+            "registration",
+            "Upgrade registration",
+            "Runtime",
+            "How the ajax upgrade registers on scrySearchReady and wraps matching forms.",
+            False,
+        ),
+        "Localized `scrySearchAjax`": (
+            "scrysearchajax",
+            "scrySearchAjax",
+            "Runtime",
+            "Localized object for the Ajax shortcode script (filterable via scry_ms_aj_ajax_localized).",
+            True,
+        ),
+        "`ScrySearchAjax_SearchForm`": (
+            "scrysearchajax-searchform",
+            "ScrySearchAjax_SearchForm",
+            "Runtime",
+            "Per-form controller for pagination, federation hidden inputs, and results rendering.",
+            True,
+        ),
+        "Pre / post AJAX actions registered": (
+            "ajax-action-pipeline",
+            "Ajax action pipeline",
+            "Runtime",
+            "Pre/post AJAX actions this add-on registers on each wrapped search form.",
+            False,
+        ),
+        "Extending from custom JS": (
+            "extending-from-custom-js",
+            "Extending from custom JS",
+            "Runtime",
+            "Hook your own post-AJAX actions after the Ajax upgrade has registered.",
+            False,
+        ),
+    }
+
+    for heading, body in split_sections(frontend, r"^### (.+?)\s*$"):
+        meta = js_sections.get(heading)
+        if meta:
+            slug, title, category, summary, heading_is_code = meta
+        else:
+            slug = slugify(heading.replace("`", ""))
+            title = heading.replace("`", "")
+            category = "Runtime"
+            summary = first_paragraph(body)
+            heading_is_code = title.startswith("window") or title.startswith("ScrySearch")
+        pages.append(
+            DocPage(
+                plugin,
+                plugin_name,
+                "javascript",
+                slug,
+                title,
+                summary or first_paragraph(body),
+                body,
+                category=category,
+                heading_is_code=heading_is_code,
             )
         )
 
@@ -550,7 +770,7 @@ def write_list_page(
         for item in items:
             rows.append(
                 f"| [`{item.title}`]({liquid_url(item.url_path)}) | {item.summary} |"
-                if item.heading_is_code and item.doc_type in {"filter", "action", "shortcode"}
+                if item.heading_is_code and item.doc_type in {"filter", "action", "shortcode", "rest"}
                 else f"| [{item.title}]({liquid_url(item.url_path)}) | {item.summary} |"
             )
         sections.append(
@@ -558,7 +778,7 @@ def write_list_page(
         )
 
     # Prefer HTML table with classes for filterable lists of hooks
-    use_filter = doc_type in {"filter", "action"}
+    use_filter = doc_type in {"filter", "action", "rest"}
     if use_filter:
         body_parts = [
             '<table class="list-table"><thead><tr><th>Name</th><th>Category</th><th>Summary</th></tr></thead><tbody>'
@@ -582,6 +802,7 @@ def write_list_page(
         "feature": f"Features — {plugin_name}",
         "filter": f"PHP filters — {plugin_name}",
         "action": f"PHP actions — {plugin_name}",
+        "rest": f"REST API — {plugin_name}",
     }
     summary_overrides = {
         "javascript": f"Runtime and front-end API pages for {plugin_name}.",
@@ -590,6 +811,7 @@ def write_list_page(
         "feature": f"Feature pages for {plugin_name}.",
         "filter": f"All PHP filter hooks for {plugin_name}.",
         "action": f"All PHP action hooks for {plugin_name}.",
+        "rest": f"REST routes for {plugin_name}.",
     }
     content = f"""---
 layout: list
@@ -625,9 +847,10 @@ def write_plugin_index(plugin: str, plugin_name: str, pages: list[DocPage], blur
         "shortcode": "Shortcodes",
         "javascript": "JavaScript API",
         "feature": "Features",
+        "rest": "REST API",
     }
     cards = []
-    order = ["guide", "filter", "action", "shortcode", "javascript", "feature"]
+    order = ["guide", "rest", "filter", "action", "shortcode", "javascript", "feature"]
     for doc_type in order:
         if counts.get(doc_type):
             n = counts[doc_type]
@@ -677,6 +900,7 @@ def write_home(all_pages: list[DocPage]) -> None:
     """Write site homepage."""
     scry = [p for p in all_pages if p.plugin == "scry-search"]
     filters = [p for p in all_pages if p.plugin == "scry-search-filters"]
+    ajax = [p for p in all_pages if p.plugin == "scry-search-ajax"]
 
     content = f"""---
 layout: default
@@ -695,8 +919,9 @@ show_sidebar: true
     <a href="https://scrywp.com/">scrywp.com</a>.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="{liquid_url('/scry-search/')}">Scry Search reference</a>
-    <a class="btn btn-ghost" href="{liquid_url('/scry-search-filters/')}">Filters upgrade</a>
+    <a class="btn btn-primary" href="{liquid_url('/scry-search/')}">Scry Search</a>
+    <a class="btn btn-ghost" href="{liquid_url('/scry-search-filters/')}">Filters</a>
+    <a class="btn btn-ghost" href="{liquid_url('/scry-search-ajax/')}">Ajax</a>
     <a class="btn btn-ghost" href="{liquid_url('/reference/')}">Browse everything</a>
   </div>
 </section>
@@ -725,11 +950,23 @@ show_sidebar: true
     </div>
     <a class="btn btn-primary" href="{liquid_url('/scry-search-filters/')}">Open docs</a>
   </article>
+
+  <article class="plugin-card">
+    <span class="badge">Premium upgrade</span>
+    <h2>Scry Search Ajax</h2>
+    <p>In-place results via <code>[scry-search-ajax]</code>, a public REST search route, and a <code>window.scrySearch</code> upgrade (<code>scry_ms_aj_*</code>).</p>
+    <div class="meta">
+      <span class="badge type-filter">{sum(1 for p in ajax if p.doc_type=='filter')} filters</span>
+      <span class="badge type-rest">{sum(1 for p in ajax if p.doc_type=='rest')} REST</span>
+      <span class="badge type-javascript">{sum(1 for p in ajax if p.doc_type=='javascript')} JS pages</span>
+    </div>
+    <a class="btn btn-primary" href="{liquid_url('/scry-search-ajax/')}">Open docs</a>
+  </article>
 </div>
 
 <section class="section-block" style="margin-top:2.5rem">
   <h2>How this repo is organized</h2>
-  <p>Each plugin has its own tree. Inside a plugin, pages are grouped by type (guides, PHP filters, PHP actions, shortcodes, JavaScript API). Future upgrades can add another top-level folder the same way.</p>
+  <p>Each plugin has its own tree. Inside a plugin, pages are grouped by type (guides, REST, PHP filters, PHP actions, shortcodes, JavaScript API). Future upgrades can add another top-level folder the same way.</p>
 </section>
 """
     (ROOT / "index.md").write_text(content, encoding="utf-8")
@@ -742,7 +979,7 @@ def write_reference(all_pages: list[DocPage]) -> None:
 
     rows = []
     for p in sorted(all_pages, key=lambda x: x.title.lower()):
-        name = f"<code>{p.title}</code>" if p.heading_is_code and p.doc_type in {"filter", "action", "shortcode"} else p.title
+        name = f"<code>{p.title}</code>" if p.heading_is_code and p.doc_type in {"filter", "action", "shortcode", "rest"} else p.title
         rows.append(
             f'<tr><td><a href="{liquid_url(p.url_path)}">{name}</a></td>'
             f"<td>{p.plugin_name}</td>"
@@ -792,7 +1029,7 @@ def write_data(all_pages: list[DocPage]) -> None:
 
 def clean_generated() -> None:
     """Remove previously generated plugin trees (keep assets/layouts)."""
-    for name in ("scry-search", "scry-search-filters", "reference"):
+    for name in ("scry-search", "scry-search-filters", "scry-search-ajax", "reference"):
         path = ROOT / name
         if path.exists():
             shutil.rmtree(path)
@@ -803,8 +1040,9 @@ def main() -> None:
 
     scry_md = (SOURCE / "scry-search" / "DOCS.md").read_text(encoding="utf-8")
     filters_md = (SOURCE / "scry-search-filters" / "DOCS.md").read_text(encoding="utf-8")
+    ajax_md = (SOURCE / "scry-search-ajax" / "DOCS.md").read_text(encoding="utf-8")
 
-    pages = parse_scry_search(scry_md) + parse_scry_search_filters(filters_md)
+    pages = parse_scry_search(scry_md) + parse_scry_search_filters(filters_md) + parse_scry_search_ajax(ajax_md)
 
     # Build hook lookup for link rewriting
     pages_by_hook: dict[str, DocPage] = {}
@@ -813,13 +1051,17 @@ def main() -> None:
         pages_by_hook[p.slug] = p
         pages_by_hook[slugify(p.title)] = p
 
-    # Special alias anchors from Filters DOCS
+    # Special alias anchors from Filters / Ajax DOCS
     for p in pages:
-        if p.slug == "window-scrysearch-upgrade":
+        if p.slug == "window-scrysearch-upgrade" and p.plugin == "scry-search-filters":
             pages_by_hook["frontend-windowscrysearch-upgrade"] = p
             pages_by_hook["connecting-to-a-specific-search-form"] = next(
                 (x for x in pages if x.slug == "scry-search-facets"), p
             )
+        if p.slug == "built-in-filter-construction":
+            pages_by_hook["built-in-filter-construction"] = p
+        if p.slug == "post-search":
+            pages_by_hook["post-wp-jsonscry-search-ajaxv1search"] = p
 
     for p in pages:
         p.body = rewrite_internal_links(p.body, pages_by_hook, p.plugin)
@@ -840,6 +1082,12 @@ def main() -> None:
         "Scry Search Filters",
         by_plugin["scry-search-filters"],
         "Public extension points for Scry Search: Meilisearch Filtered Search. All add-on hooks use the scry_ms_fa_ prefix.",
+    )
+    write_plugin_index(
+        "scry-search-ajax",
+        "Scry Search Ajax",
+        by_plugin["scry-search-ajax"],
+        "Public extension points for Scry Search Ajax — REST search, scry_ms_aj_* filters, and the window.scrySearch ajax upgrade.",
     )
 
     for plugin, plugin_pages in by_plugin.items():

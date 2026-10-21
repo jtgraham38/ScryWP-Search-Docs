@@ -13,7 +13,7 @@ Public extension points for Scry Search: Meilisearch Filtered Search. All add-on
 
 ## Browse by type
 
-- **[Guides]({{ '/scry-search-filters/guides/' | relative_url }})** — 3 pages
+- **[Guides]({{ '/scry-search-filters/guides/' | relative_url }})** — 4 pages
 - **[PHP filters]({{ '/scry-search-filters/filters/' | relative_url }})** — 5 pages
 - **[Shortcodes]({{ '/scry-search-filters/shortcodes/' | relative_url }})** — 1 page
 - **[JavaScript API]({{ '/scry-search-filters/javascript/' | relative_url }})** — 1 page

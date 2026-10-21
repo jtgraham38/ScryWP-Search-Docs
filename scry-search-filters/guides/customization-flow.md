@@ -17,12 +17,13 @@ category: "Guides"
 1. Generate or hand-author `[scry-search-facets]` with escaped `groups` JSON
 2. Optionally set `selector` so only specific Scry Search forms receive filters
 3. Change the widget query selector globally via `scry_ms_fa_filters_localized`
-4. Ensure Meilisearch indexes have the needed filterable attributes (e.g. `taxonomies.category.id`, `post_date_unix`)
+4. Ensure Meilisearch indexes have the needed filterable attributes (e.g. `taxonomies.category.id`, `post_date_unix`, `post_meta._price`)
+5. For meta ranges, index numeric values (not strings) and reindex — see [Built-in filter construction]({{ '/scry-search-filters/guides/built-in-filter-construction/' | relative_url }})
 
 ### Custom Meilisearch filters
 
 1. Submit extra fields from your own UI (or extend `groups`) under a consistent request shape
-2. Translate them in `scry_ms_fa_search_filters`
+2. Translate them in `scry_ms_fa_search_filters` (taxonomies / meta / date are already built-in)
 3. Mirror anything worth reporting in `scry_ms_fa_analytics_filters_payload`
 
 ### Generator catalog

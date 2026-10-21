@@ -366,6 +366,126 @@ pages:
     category: "Runtime"
     url: /scry-search/javascript/windowlocalized/
     summary: "PHP-localized config object read by the front-end runtime."
+  - title: "scry_ms_premium_upgrade_settings_ui"
+    plugin: scry-search-ajax
+    doc_type: action
+    category: "Integration"
+    url: /scry-search-ajax/actions/scry_ms_premium_upgrade_settings_ui/
+    summary: "Renders the shortcode generator UI inside the Ajax upgrade settings modal when the upgrade slug matches scry-search-ajax."
+  - title: "scry_ms_aj_ajax_localized"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_localized/
+    summary: "Filters the data passed to wp_localize_script for the front-end shortcode script (scrySearchAjax)."
+  - title: "scry_ms_aj_ajax_search_federation"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_federation/
+    summary: "Filters the Meilisearch\\Contracts\\MultiSearchFederation object (limit/offset, and any further federation options you attach)."
+  - title: "scry_ms_aj_ajax_search_final_results"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_final_results/
+    summary: "Filters shaped / enriched hit results before HTML rendering."
+  - title: "scry_ms_aj_ajax_search_index_names"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_index_names/
+    summary: "Filters the post-type → index-name map used for the request."
+  - title: "scry_ms_aj_ajax_search_parameters"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_parameters/
+    summary: "Filters raw search parameters after they are read from the REST request, before the Meilisearch client runs."
+  - title: "scry_ms_aj_ajax_search_query"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_query/
+    summary: "Filters each per-index Meilisearch\\Contracts\\SearchQuery before it is added to the multi-search batch."
+  - title: "scry_ms_aj_ajax_search_raw_results"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_raw_results/
+    summary: "Filters the raw Meilisearch multiSearch response before hits are enriched from WordPress."
+  - title: "scry_ms_aj_ajax_search_results_rendered"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Ajax search"
+    url: /scry-search-ajax/filters/scry_ms_aj_ajax_search_results_rendered/
+    summary: "Filters the HTML string produced by rendered_ajax.php before it is returned in the REST response."
+  - title: "scry_ms_premium_upgrades_display"
+    plugin: scry-search-ajax
+    doc_type: filter
+    category: "Integration"
+    url: /scry-search-ajax/filters/scry_ms_premium_upgrades_display/
+    summary: "Used to mark the Ajax upgrade card as active when this plugin is installed."
+  - title: "Ajax upgrade overview"
+    plugin: scry-search-ajax
+    doc_type: guide
+    category: "Basics"
+    url: /scry-search-ajax/guides/overview/
+    summary: "Premium add-on hooks use scry_ms_aj_; shared main-plugin hooks keep the scry_ms_ prefix."
+  - title: "Shared main-plugin hooks"
+    plugin: scry-search-ajax
+    doc_type: guide
+    category: "Integration"
+    url: /scry-search-ajax/guides/shared-main-plugin-hooks/
+    summary: "These use the main plugin prefix scry_ms_. This plugin either applies them (so other code can filter shared behavior) or listens to them (integration with the main upgrades UI)."
+  - title: "Ajax action pipeline"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/ajax-action-pipeline/
+    summary: "Pre/post AJAX actions this add-on registers on each wrapped search form."
+  - title: "Ajax JavaScript runtime"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/overview/
+    summary: "Script: features/shortcode/assets/js/ajax.js Depends on: base plugin handle scry_ms_window-script (and optionally scry-search-facets) Localized object: scrySearchAjax (filterable via scry_ms_aj_ajax_localized)"
+  - title: "Base runtime"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/base-runtime/
+    summary: "Pieces of window.scrySearch that this add-on uses."
+  - title: "Extending from custom JS"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/extending-from-custom-js/
+    summary: "Hook your own post-AJAX actions after the Ajax upgrade has registered."
+  - title: "scrySearchAjax"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/scrysearchajax/
+    summary: "Localized object for the Ajax shortcode script (filterable via scry_ms_aj_ajax_localized)."
+  - title: "ScrySearchAjax_SearchForm"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/scrysearchajax-searchform/
+    summary: "Per-form controller for pagination, federation hidden inputs, and results rendering."
+  - title: "Upgrade registration"
+    plugin: scry-search-ajax
+    doc_type: javascript
+    category: "Runtime"
+    url: /scry-search-ajax/javascript/registration/
+    summary: "How the ajax upgrade registers on scrySearchReady and wraps matching forms."
+  - title: "POST /wp-json/scry-search-ajax/v1/search"
+    plugin: scry-search-ajax
+    doc_type: rest
+    category: "REST"
+    url: /scry-search-ajax/rest/post-search/
+    summary: "Federated Meilisearch search used by the [scry-search-ajax] shortcode."
   - title: "scry_ms_fa_analytics_filters_payload"
     plugin: scry-search-filters
     doc_type: filter
@@ -396,6 +516,12 @@ pages:
     category: "Search"
     url: /scry-search-filters/filters/scry_ms_fa_search_filters/
     summary: "Filters Meilisearch filter expressions before they are joined with AND and passed to setFilter()."
+  - title: "Built-in filter construction"
+    plugin: scry-search-filters
+    doc_type: guide
+    category: "Search"
+    url: /scry-search-filters/guides/built-in-filter-construction/
+    summary: "Location: ScrySearch_Filters_SearchFeature::add_filters_to_search_query() in features/search/feature.php Hooked to: base plugin scry_ms_multi_search_query (per index)."
   - title: "Filters upgrade overview"
     plugin: scry-search-filters
     doc_type: guide

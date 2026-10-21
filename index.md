@@ -15,8 +15,9 @@ show_sidebar: true
     <a href="https://scrywp.com/">scrywp.com</a>.
   </p>
   <div class="hero-actions">
-    <a class="btn btn-primary" href="{{ '/scry-search/' | relative_url }}">Scry Search reference</a>
-    <a class="btn btn-ghost" href="{{ '/scry-search-filters/' | relative_url }}">Filters upgrade</a>
+    <a class="btn btn-primary" href="{{ '/scry-search/' | relative_url }}">Scry Search</a>
+    <a class="btn btn-ghost" href="{{ '/scry-search-filters/' | relative_url }}">Filters</a>
+    <a class="btn btn-ghost" href="{{ '/scry-search-ajax/' | relative_url }}">Ajax</a>
     <a class="btn btn-ghost" href="{{ '/reference/' | relative_url }}">Browse everything</a>
   </div>
 </section>
@@ -45,9 +46,21 @@ show_sidebar: true
     </div>
     <a class="btn btn-primary" href="{{ '/scry-search-filters/' | relative_url }}">Open docs</a>
   </article>
+
+  <article class="plugin-card">
+    <span class="badge">Premium upgrade</span>
+    <h2>Scry Search Ajax</h2>
+    <p>In-place results via <code>[scry-search-ajax]</code>, a public REST search route, and a <code>window.scrySearch</code> upgrade (<code>scry_ms_aj_*</code>).</p>
+    <div class="meta">
+      <span class="badge type-filter">9 filters</span>
+      <span class="badge type-rest">1 REST</span>
+      <span class="badge type-javascript">7 JS pages</span>
+    </div>
+    <a class="btn btn-primary" href="{{ '/scry-search-ajax/' | relative_url }}">Open docs</a>
+  </article>
 </div>
 
 <section class="section-block" style="margin-top:2.5rem">
   <h2>How this repo is organized</h2>
-  <p>Each plugin has its own tree. Inside a plugin, pages are grouped by type (guides, PHP filters, PHP actions, shortcodes, JavaScript API). Future upgrades can add another top-level folder the same way.</p>
+  <p>Each plugin has its own tree. Inside a plugin, pages are grouped by type (guides, REST, PHP filters, PHP actions, shortcodes, JavaScript API). Future upgrades can add another top-level folder the same way.</p>
 </section>

@@ -1,6 +1,6 @@
 # Scry Search Docs
 
-Jekyll documentation site for **Scry Search** and premium upgrades (starting with **Scry Search Filters**).
+Jekyll documentation site for **Scry Search** and premium upgrades (**Scry Search Filters**, **Scry Search Ajax**).
 
 Branding follows [scrywp.com](https://scrywp.com/) (Figtree, purple primary `#a31bff`, blue info accent `#2e5eff`, light surface).
 
@@ -19,6 +19,13 @@ scry-search-filters/         Filters upgrade
   filters/                   scry_ms_fa_* filters
   javascript/                filters upgrade on window.scrySearch
 
+scry-search-ajax/            Ajax upgrade
+  guides/
+  rest/                      POST /wp-json/scry-search-ajax/v1/search
+  filters/                   scry_ms_aj_* filters
+  actions/                   main-plugin actions this add-on consumes
+  javascript/                ajax upgrade on window.scrySearch
+
 reference/                   Flat list of every page
 _source/                     Canonical DOCS.md copies used to regenerate
 scripts/generate_docs.py     Regenerator
@@ -33,6 +40,7 @@ After updating a plugin’s `DOCS.md`, copy it into `_source/` and run:
 ```bash
 cp ../scrywp_search/DOCS.md _source/scry-search/DOCS.md
 cp ../ScryWP-Search-Filters/DOCS.md _source/scry-search-filters/DOCS.md
+cp ../ScryWP-Search-Ajax/DOCS.md _source/scry-search-ajax/DOCS.md
 python3 scripts/generate_docs.py
 ```
 

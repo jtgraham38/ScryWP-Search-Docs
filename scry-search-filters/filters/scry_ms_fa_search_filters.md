@@ -38,7 +38,4 @@ add_filter( 'scry_ms_fa_search_filters', function( $filters, $index_name, $reque
 
 **Returns:** `array` of filter strings. Non-arrays are coerced to `[]`.
 
-Built-in expressions currently cover:
-
-- `scry-search[facets][general][post_date_unix]` → `post_date_unix` range (when filterable)
-- `scry-search[facets][taxonomies][{taxonomy}][]` → one `(taxonomies.{taxonomy}.id = {id})` per selected term slug (AND across terms; skipped when the attribute is not filterable)
+After this filter runs, non-empty expressions are joined with `AND` and applied via `$search_query->setFilter([ $filters_string ])`.

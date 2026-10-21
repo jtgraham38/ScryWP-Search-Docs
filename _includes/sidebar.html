@@ -4,6 +4,7 @@
     <ul>
       <li><a href="{{ '/scry-search/' | relative_url }}" {% if page.plugin == 'scry-search' and page.list_kind == 'plugin' %}class="is-active"{% endif %}>Scry Search</a></li>
       <li><a href="{{ '/scry-search-filters/' | relative_url }}" {% if page.plugin == 'scry-search-filters' and page.list_kind == 'plugin' %}class="is-active"{% endif %}>Scry Search Filters</a></li>
+      <li><a href="{{ '/scry-search-ajax/' | relative_url }}" {% if page.plugin == 'scry-search-ajax' and page.list_kind == 'plugin' %}class="is-active"{% endif %}>Scry Search Ajax</a></li>
       <li><a href="{{ '/reference/' | relative_url }}" {% if page.url == '/reference/' %}class="is-active"{% endif %}>Full reference</a></li>
     </ul>
   </div>
@@ -28,6 +29,19 @@
       <li><a href="{{ '/scry-search-filters/shortcodes/' | relative_url }}">Shortcodes</a></li>
       <li><a href="{{ '/scry-search-filters/filters/' | relative_url }}">PHP filters</a></li>
       <li><a href="{{ '/scry-search-filters/javascript/' | relative_url }}">JavaScript API</a></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if page.plugin == 'scry-search-ajax' or page.plugin == nil %}
+  <div class="sidebar-group">
+    <h3>Ajax upgrade</h3>
+    <ul>
+      <li><a href="{{ '/scry-search-ajax/guides/' | relative_url }}">Guides</a></li>
+      <li><a href="{{ '/scry-search-ajax/rest/' | relative_url }}">REST API</a></li>
+      <li><a href="{{ '/scry-search-ajax/filters/' | relative_url }}">PHP filters</a></li>
+      <li><a href="{{ '/scry-search-ajax/actions/' | relative_url }}">PHP actions</a></li>
+      <li><a href="{{ '/scry-search-ajax/javascript/' | relative_url }}">JavaScript API</a></li>
     </ul>
   </div>
   {% endif %}

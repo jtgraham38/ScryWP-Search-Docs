@@ -104,6 +104,7 @@ Top-level keys are group IDs. Each group has `label` and `facets`. Facet keys ar
 | `checkbox`  | Checkbox; `name` is the field; **value** is the facet key (e.g. term slug). Prefer `name` ending in `[]` for multi-select. |
 | `select`    | `<select>`; requires `options`: `{ label, value }[]`.                                                                      |
 | `daterange` | Two date inputs: `{name}[from]` and `{name}[to]`.                                                                          |
+| `range`     | Dual range slider: `{name}[from]` and `{name}[to]`, plus `min` / `max` / `step` on the facet. For post meta, also submit `{name}[type]=range` (the generator does this). |
 | `hidden`    | Always-on hidden input. Optional `value` (defaults to the facet key).                                                      |
 
 
@@ -114,13 +115,18 @@ Legacy string facets (`"facet_key": "Label"`) are still accepted; they render as
 Filters are submitted under `scry-search[facets]` (not the older `scry-search[filters][facets]` path):
 
 ```
-scry-search[facets][taxonomies][category][]     # term slugs
-scry-search[facets][general][post_date_unix][from]  # YYYY-MM-DD
+scry-search[facets][taxonomies][category][]        # term slugs
+scry-search[facets][general][post_date_unix][from] # YYYY-MM-DD
 scry-search[facets][general][post_date_unix][to]
-post_type                                       # optional top-level select / hidden CPT lock
+scry-search[facets][meta][_price][from]            # numeric range bound
+scry-search[facets][meta][_price][to]
+scry-search[facets][meta][_price][type]            # must be "range" for built-in meta handling
+post_type                                          # optional top-level select / hidden CPT lock
 ```
 
-The search feature builds Meilisearch expressions only when the attribute is filterable on that index (e.g. `taxonomies.category.id`, `post_date_unix`). If a field is not filterable on an index, documents from that index are **not** excluded by that facet.
+The search feature builds Meilisearch expressions only when the attribute is filterable on that index (e.g. `taxonomies.category.id`, `post_date_unix`, `post_meta._price`). If a field is not filterable on an index, documents from that index are **not** excluded by that facet.
+
+See [Built-in filter construction]({{ '/scry-search-filters/guides/built-in-filter-construction/' | relative_url }}) for how each request key becomes a Meilisearch expression.
 
 ### Connecting to a specific search form
 
@@ -142,6 +148,8 @@ Matching uses `searchForm.formElement.matches(selector)`. The selector must ther
 In the admin shortcode generator (**Appearance** tab → **Search form selector**), enter the same CSS selector. Square brackets in the value are escaped automatically.
 
 If nothing matches, the facets widget still renders but never injects fields into a search submit.
+
+**Caution — multiple facet widgets on one page:** Each facets shortcode injects its fields into every search form it attaches to. If two (or more) facet interfaces both target the same search form — or both use an empty `selector` — they will all inject on submit. Hidden inputs that share the same `name` can overwrite each other, so facets from one widget may clobber another. Scope each facet interface with a distinct `selector` that matches only the search bar it belongs to.
 
 ### How it wires to search forms
 

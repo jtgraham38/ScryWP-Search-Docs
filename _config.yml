@@ -32,6 +32,11 @@ defaults:
     values:
       plugin: scry-search-filters
       plugin_name: Scry Search Filters
+  - scope:
+      path: "scry-search-ajax"
+    values:
+      plugin: scry-search-ajax
+      plugin_name: Scry Search Ajax
 
 exclude:
   - Gemfile
